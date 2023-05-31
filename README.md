@@ -14,6 +14,9 @@ For more details please refer to the paper mentioned below.
 - low rank
 - spatiotemporal smoothness
 
+# TODO
+1. Refactor GL_LRSS.m with standalone low-rank decomposition.
+
 # Reference
 > Liu, Yueliang, et al. "Graph learning for spatiotemporal signals with long-and short-term characterization." IEEE Transactions on Signal and Information Processing over Networks 6 (2020): 699-713.
 
