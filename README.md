@@ -1,10 +1,11 @@
 # GL-LRSS
 **G**raph **L**earning based on **L**ow **R**ank and **S**patiotemporal **S**moothness
 
-This algorithm estimates graph topology given graph signal samples.
+This algorithm estimates a graph Laplacian $\widehat{\mathbf{L}}$ and denoised matrix samples $\widehat{\mathbf{X}}$ given graph signal samples $\mathbf{X}\in\mathbb{R}^{n\times T}$.
 
-The signal is considered to be low-rank and be smooth with the measure of true graph Laplacian $\mathbf{L}$.
+The signal is considered to be low-rank and be smooth with the measure of the ground truth graph Laplacian $\mathbf{L}\in\mathbb{R}^{n\times n}$.
 
+For more details please refer to the paper mentioned below.
 ## Keywords
 - MATLAB
 - graph learning
