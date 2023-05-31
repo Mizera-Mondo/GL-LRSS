@@ -1,6 +1,6 @@
-function [L, X] = GL-LRSS(Y, options)
-%GLLRSS 此处显示有关此函数的摘要
-%   此处显示详细说明
+function [L, X] = GL_LRSS(Y, options)
+%GL_LRSS Implementation of GL-LRSS.
+% Refer to the paper for detailed explanation for arugments.
 arguments
     Y double
     options.R = 0
