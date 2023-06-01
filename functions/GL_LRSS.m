@@ -55,7 +55,7 @@ while ~isConverge && ~isMaxIter
     X_old = X;
     
     tic;
-    % Graph topology refinement
+    %% Graph topology refinement
     Z = L;
     Xi = Z - L;
     admmCount = 1;
@@ -85,62 +85,64 @@ while ~isConverge && ~isMaxIter
     toc;
 
     tic;
-    % Low-rank component estimation
-%    disp('Low-rank Estimation');
-    P = X;
-    Q = X - P;
-    admmCount = 1;
-    isAdmmConverge = false;
-    isAdmmMaxIter = false;
-    
-    
-    while ~isAdmmConverge && ~isAdmmMaxIter
-%        disp(['Iter: ' num2str(admmCount)]);
-        X_old_ADMM = X;
-        
-        % Update of X
-        count = 1;
-        
-        gradX = @(X) 2*D(X - Y) - 2*R*D(X - Y)*B' + rho*(X - P) ...
-                     + Q + 2*alpha*(L*D(X) - R*L*X*B' + L*X*(B*B'));
-        phi = 2*D(Y) - 2*R*D(Y)*B' +rho*P - Q;
-
-        % X = zeros(size(X));
-        gX = gradX(X);
-        dX = -gX;
-        
-        % Optimize X with Flecther-Reeves conjugate gradient method
-        while count < 10
-
-            mu = -1*trace(dX'*gX)/trace(dX'*(gX + phi)); % The minus sign of mu may be a mistake
-            X = X + mu*dX;
-
-            gXnew = gradX(X);
-            theta = norm(gXnew, 'fro')/norm(gX, 'fro');
-            theta = theta^2;
-            
-            gX = gXnew;
-            dX = -gX + theta*dX;
-            count = count + 1;
-
-        end
-        
-
-        % Update of auxiliary P
-        P = singularValueThreshold(X + 1/rho*Q, gamma/rho);
-
-        % Update of Q
-        Q = Q + rho*(X - P);
-
-
-        % Convergence check
-        isAdmmConverge = norm(X_old_ADMM - X,'fro')/norm(X, 'fro') < tol;
-        isAdmmMaxIter = admmCount >= maxIter;
-        admmCount = admmCount + 1;
-    end    
+    %% Low-rank component estimation
+    %'TODO: USING lowRankEstimation
+    X = lowRankEstimation(X, D, L, R, B, Y, alpha, gamma);
+% %    disp('Low-rank Estimation');
+%     P = X;
+%     Q = X - P;
+%     admmCount = 1;
+%     isAdmmConverge = false;
+%     isAdmmMaxIter = false;
+% 
+% 
+%     while ~isAdmmConverge && ~isAdmmMaxIter
+% %        disp(['Iter: ' num2str(admmCount)]);
+%         X_old_ADMM = X;
+% 
+%         % Update of X
+%         count = 1;
+% 
+%         gradX = @(X) 2*D(X - Y) - 2*R*D(X - Y)*B' + rho*(X - P) ...
+%                      + Q + 2*alpha*(L*D(X) - R*L*X*B' + L*X*(B*B'));
+%         phi = 2*D(Y) - 2*R*D(Y)*B' +rho*P - Q;
+% 
+%         % X = zeros(size(X));
+%         gX = gradX(X);
+%         dX = -gX;
+% 
+%         % Optimize X with Flecther-Reeves conjugate gradient method
+%         while count < 10
+% 
+%             mu = -1*trace(dX'*gX)/trace(dX'*(gX + phi)); % The minus sign of mu may be a mistake
+%             X = X + mu*dX;
+% 
+%             gXnew = gradX(X);
+%             theta = norm(gXnew, 'fro')/norm(gX, 'fro');
+%             theta = theta^2;
+% 
+%             gX = gXnew;
+%             dX = -gX + theta*dX;
+%             count = count + 1;
+% 
+%         end
+% 
+% 
+%         % Update of auxiliary P
+%         P = singularValueThreshold(X + 1/rho*Q, gamma/rho);
+% 
+%         % Update of Q
+%         Q = Q + rho*(X - P);
+% 
+% 
+%         % Convergence check
+%         isAdmmConverge = norm(X_old_ADMM - X,'fro')/norm(X, 'fro') < tol;
+%         isAdmmMaxIter = admmCount >= maxIter;
+%         admmCount = admmCount + 1;
+%     end    
     
     toc;
-    % Terminate condition check
+    %% Terminate condition check
     % isConverge = (norm(L_old - L, 'fro')/norm(L, 'fro') < tol) && ...
     %             (norm(X_old - X, 'fro')/norm(X, 'fro') < tol);
     isConverge = (norm(L_old - L, 'fro')/norm(L, 'fro') < tol);

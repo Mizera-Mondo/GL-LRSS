@@ -26,16 +26,18 @@ rPertubation = 0.01;
 
 [Y, A, R] = genRandomSignal(nodeNum, usedEigNum, signalLength, noiseCov, rPertubation);
 
+L = diag(sum(A)) - A;
 B = zeros(signalLength);
 B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
 alpha = 0.1;
 beta = 0.1;
 gamma = 0.01;
+
 targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X)) + beta*(norm(L, 'fro'))^2 + gamma*(nuclearNorm(X));
 
 
-[Lest, X] = GL_LRSS(Y, R = R, beta = beta, tol = 1e-4);
+[Lest, X] = GL_LRSS(Y, R = R, beta = beta, gamma = gamma, tol = 1e-4);
 close all;
 figure; imagesc(L); colorbar; title('Ground Truth');
 figure; imagesc(Lest); colorbar; title('Estimated');
