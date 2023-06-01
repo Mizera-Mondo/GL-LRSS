@@ -50,6 +50,7 @@ iterCount = 1;
 isConverge = false;
 isMaxIter = false;
 
+disp('Starting estimation...');
 while ~isConverge && ~isMaxIter
     L_old = L;
     X_old = X;
