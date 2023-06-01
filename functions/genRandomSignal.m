@@ -8,7 +8,8 @@ function [x, A, R] = genRandomSignal(nodeNum, usedEigNum, signalLength, noiseCov
     [vec, val] = sortEigen(vec, val, 'ascend');
     vecT = vec(:, 1:usedEigNum);
     valT = val(1:usedEigNum, 1:usedEigNum);
-    covZ = abs(valT);
+    covZ = pinv(neatZero(valT));
+    % 'Is the cov right? no inversion?
 
     z = randn(usedEigNum, signalLength);
     z = sqrt(covZ)*z;
