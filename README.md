@@ -14,12 +14,17 @@ For more details please refer to the paper mentioned below.
 - low rank
 - spatiotemporal smoothness
 
+# Dependencies
+Please ensure to add the dependencies to the path of MATLAB before running the demo.
+
+1. [MATLAB Odds-and-ends Supplimentaries](https://github.com/Mizera-Mondo/matlab-one-supp)
+2. [nearestSPD - MATLAB File Exchange](https://ww2.mathworks.cn/matlabcentral/fileexchange/42885-nearestspd?s_tid=srchtitle)
+
+
 # TODO
-1. Refactor GL_LRSS.m with standalone low-rank decomposition.
+~~1. Refactor GL_LRSS.m with standalone low-rank decomposition.~~
 
 # Reference
 > Liu, Yueliang, et al. "Graph learning for spatiotemporal signals with long-and short-term characterization." IEEE Transactions on Signal and Information Processing over Networks 6 (2020): 699-713.
 
-# Code Reference
-This implementation of GL-LRSS includes a copy of nearestSPD.m written by John D'Errico. 
-[nearestSPD - MATLAB File Exchange](https://ww2.mathworks.cn/matlabcentral/fileexchange/42885-nearestspd?s_tid=srchtitle)
+
