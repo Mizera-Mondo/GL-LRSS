@@ -24,6 +24,10 @@ Please ensure to add the dependencies to the path of MATLAB before running the d
 # TODO
 ~~1. Refactor GL_LRSS.m with standalone low-rank decomposition.~~
 
+# Notes and Known Problems
+1. The choosing of $\alpha$ and $\beta$ should not be static, cuz the term $\mathrm{tr}\left\{\mathcal{D}(\mathbf{X})'\mathbf{L}\mathcal{D}(\mathbf{X})\right\}$ will inflate as the signal length grows.
+2. The time consumed by Low-rank decomposition explodes as the length of signal grows.
+ 
 # Reference
 > Liu, Yueliang, et al. "Graph learning for spatiotemporal signals with long-and short-term characterization." IEEE Transactions on Signal and Information Processing over Networks 6 (2020): 699-713.
 
