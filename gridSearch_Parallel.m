@@ -48,6 +48,5 @@ parfor j = 1:10
         errorGridAlpha(i, j) = alpha;
         errorGridBeta(i, j) = beta;
         errorRec(i, j) = norm(Lest - L, 'fro');
-        countBeta = countBeta + 1;
     end
 end
