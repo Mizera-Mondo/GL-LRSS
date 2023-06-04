@@ -20,7 +20,7 @@
 % end
 nodeNum = 20;
 usedEigNum = 15;
-signalLength = 5000;
+signalLength = 2000;
 noiseCov = 0.01;
 rPertubation = 0.01;
 
@@ -30,16 +30,24 @@ L = diag(sum(A)) - A;
 B = zeros(signalLength);
 B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
-alpha = 0.31;
-beta = 1.6;
 gamma = 0.001;
 
-targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X)) + beta*(norm(L, 'fro'))^2 + gamma*(nuclearNorm(X));
-
-
-[Lest, X] = GL_LRSS(Y, R = R, beta = beta, gamma = gamma, tol = 1e-4);
-close all;
-figure; imagesc(L); colorbar; title('Ground Truth');
-figure; imagesc(Lest); colorbar; title('Estimated');
-
-% save('temp.mat');
+alphaStart = 0.01;
+alphaStep = 1;
+betaStart = 1.3;
+betaStep = 0.5;
+errorGridAlpha = zeros(5, 10);
+errorGridBeta = zeros(5, 10);
+errorRec = zeros(5, 10);
+parfor j = 1:10
+    for i = 1:5
+        disp([num2str(i) '-th alpha, ' num2str(j) '-th beta']);
+        alpha = alphaStart + i*alphaStep;
+        beta = betaStart +  j*betaStep;
+        [Lest, X] = GL_LRSS(Y, R = R, beta = beta, gamma = gamma, tol = 1e-4);
+        errorGridAlpha(i, j) = alpha;
+        errorGridBeta(i, j) = beta;
+        errorRec(i, j) = norm(Lest - L, 'fro');
+        countBeta = countBeta + 1;
+    end
+end
