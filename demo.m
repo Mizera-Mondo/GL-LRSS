@@ -20,7 +20,7 @@
 % end
 nodeNum = 20;
 usedEigNum = 15;
-signalLength = 5000;
+signalLength = 2000;
 noiseCov = 0.01;
 rPertubation = 0.01;
 
