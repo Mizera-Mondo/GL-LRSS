@@ -31,13 +31,13 @@ B = zeros(signalLength);
 B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
 alpha = 0.31;
-beta = 1.6;
+beta = 1.3;
 gamma = 0.001;
 
 targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X)) + beta*(norm(L, 'fro'))^2 + gamma*(nuclearNorm(X));
 
 
-[Lest, X] = GL_LRSS(Y, R = R, beta = beta, gamma = gamma, tol = 1e-4);
+[X, Lest] = GL_LRSS(Y, R = R, beta = beta, gamma = gamma, tol = 1e-4);
 close all;
 figure; imagesc(L); colorbar; title('Ground Truth');
 figure; imagesc(Lest); colorbar; title('Estimated');
