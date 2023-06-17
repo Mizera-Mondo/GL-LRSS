@@ -20,8 +20,8 @@
 % end
 nodeNum = 20;
 usedEigNum = 15;
-signalLength = 2000;
-noiseCov = 0.01;
+signalLength = 20000;
+noiseCov = 0.1;
 rPertubation = 0.01;
 
 [Y, A, R] = genRandomSignal(nodeNum, usedEigNum, signalLength, noiseCov, rPertubation);
@@ -32,7 +32,7 @@ B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
 alpha = 0.31;
 beta = 1.3;
-gamma = 0.001;
+gamma = 0.3;
 
 targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X)) + beta*(norm(L, 'fro'))^2 + gamma*(nuclearNorm(X));
 
