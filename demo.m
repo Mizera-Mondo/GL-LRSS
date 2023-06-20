@@ -19,8 +19,8 @@
 %     X(:, i) = R*X(:, i - 1) + V(:, i);
 % end
 nodeNum = 20;
-usedEigNum = 15;
-signalLength = 20000;
+usedEigNum = 19;
+signalLength = 2000;
 noiseCov = 0.1;
 rPertubation = 0.01;
 
@@ -30,7 +30,7 @@ L = diag(sum(A)) - A;
 B = zeros(signalLength);
 B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
-alpha = 0.31;
+alpha = 0.5;
 beta = 1.3;
 gamma = 0.3;
 
