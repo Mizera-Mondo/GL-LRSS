@@ -1,7 +1,12 @@
-function [X, P] = lowRankEstimation(X, D, L, R, B, Y, alpha, gamma)
+function [X, P] = lowRankEstimation(X, D, L, R, B, Y, alpha, gamma, options)
 %LOWRANKESTIMATION Solve ||D(X - Y)||_F^2 + alpha(D(X)'*L*D(X)) +
 %gamma||P||_*, X = P
 %   Using ADMM
+arguments
+    X, D, L, R, B, Y, alpha, gamma double
+    options.method = "GD"
+
+end
 P = X;
 Q = X - P;
 rho = 0.5;
@@ -21,8 +26,10 @@ while ~isADMMConverge && ~isMaxIter
     X_old = X;
     P_old = P;
 % Update of X
-    targetFunX_ = @(X) targetFunX(X, P, Q);
-    X = lineSearchArminjo(X, gradX(X, P, Q), targetFunX_, 0.05, 1000);
+    if strcmp(options.method, "GD")
+        targetFunX_ = @(X) targetFunX(X, P, Q);
+        X = lineSearchArminjo(X, gradX(X, P, Q), targetFunX_, 0.05, 1000);
+    end
 % Update of P
     P = singularValueThreshold(X + Q/rho, gamma/rho);
 % Update of Q

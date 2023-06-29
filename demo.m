@@ -18,10 +18,10 @@
 % for i = 2:m
 %     X(:, i) = R*X(:, i - 1) + V(:, i);
 % end
-nodeNum = 20;
-usedEigNum = 19;
+nodeNum = 10;
+usedEigNum = 9;
 signalLength = 2000;
-noiseCov = 0.1;
+noiseCov = 0.01;
 rPertubation = 0.01;
 
 [Y, A, R] = genRandomSignal(nodeNum, usedEigNum, signalLength, noiseCov, rPertubation);
