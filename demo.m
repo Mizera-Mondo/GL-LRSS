@@ -18,10 +18,10 @@
 % for i = 2:m
 %     X(:, i) = R*X(:, i - 1) + V(:, i);
 % end
-nodeNum = 10;
-usedEigNum = 9;
-signalLength = 2000;
-noiseCov = 0.01;
+nodeNum = 15;
+usedEigNum = 12;
+signalLength = 1000;
+noiseCov = 0.001;
 rPertubation = 0.01;
 
 [Y, A, R] = genRandomSignal(nodeNum, usedEigNum, signalLength, noiseCov, rPertubation);
@@ -32,7 +32,7 @@ B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
 alpha = 0.5;
 beta = 1.3;
-gamma = 0.3;
+gamma = 0.2;
 
 targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X)) + beta*(norm(L, 'fro'))^2 + gamma*(nuclearNorm(X));
 
@@ -41,5 +41,5 @@ targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X))
 close all;
 figure; imagesc(L); colorbar; title('Ground Truth');
 figure; imagesc(Lest); colorbar; title('Estimated');
-
+figure; [~, S, ~] = svd(X); imagesc(S(:, 1:15));
 % save('temp.mat');
