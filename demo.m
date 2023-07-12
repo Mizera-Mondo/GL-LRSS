@@ -32,14 +32,23 @@ B(2:end, 2:end) = eye(signalLength - 1);
 D = @(X) X - R*X*B;
 alpha = 0.5;
 beta = 1.3;
-gamma = 0.17;
+gamma = 0.2;
 
 targetFunction = @(L, X) (norm(D(X - Y), 'fro'))^2 + alpha*trace((D(X))'*L*D(X)) + beta*(norm(L, 'fro'))^2 + gamma*(nuclearNorm(X));
 
 
 [X, Lest] = GL_LRSS(Y, R = R, beta = beta, gamma = gamma, tol = 1e-4);
+% results
+errLap = norm(Lest - L, 'fro')/norm(L, 'fro');
+Aest = diag(diag(Lest)) - Lest;
+disp("============================================");
+disp("Estimation finished. NMSE of Laplacian: " + num2str(100*errLap) + "%");
+[a, r, p, fM] = classifierPerformance(A > threA, Aest > threA);
+disp("Accuracy  Recall   Precision   f-Measure");
+disp(num2str([a, r, p, fM]));
+
 close all;
 figure; imagesc(L); colorbar; title('Ground Truth');
 figure; imagesc(Lest); colorbar; title('Estimated');
-figure; [~, S, ~] = svd(X); imagesc(S(:, 1:15));
+figure; [~, S, ~] = svd(X); imagesc(S(:, 1:10));
 % save('temp.mat');
