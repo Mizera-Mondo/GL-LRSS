@@ -38,7 +38,7 @@ maxIter = options.maxIter;
 
 % Operators
 B = zeros(b);
-B(2:end, 2:end) = eye(b - 1);
+B(1:end - 1, 2:end) = eye(b - 1);
 D = @(X) X - R*X*B;
 
 
@@ -51,12 +51,12 @@ iterCount = 1;
 isConverge = false;
 isMaxIter = false;
 
-disp('Starting estimation...');
+% disp('Starting estimation...');
 while ~isConverge && ~isMaxIter
     L_old = L;
     X_old = X;
 
-    tic;
+    
     %% Graph topology refinement
     Z = L;
     Xi = Z - L;
@@ -84,12 +84,12 @@ while ~isConverge && ~isMaxIter
         admmCount = admmCount + 1;
     end
 
-    toc;
+    
 
 
     %% Low-rank component estimation
     if options.lowRankEst
-        tic;
+        
         X = lowRankEstimation(X, D, L, R, B, Y, alpha, gamma);
         % %    disp('Low-rank Estimation');
         %     P = X;
@@ -143,7 +143,7 @@ while ~isConverge && ~isMaxIter
         %         isAdmmMaxIter = admmCount >= maxIter;
         %         admmCount = admmCount + 1;
         %     end
-        toc;
+        
     end
     
 
@@ -156,7 +156,7 @@ while ~isConverge && ~isMaxIter
     isMaxIter = iterCount >= maxIter;
     iterCount = iterCount + 1;
 
-    disp(num2str(norm(L_old - L, 'fro')/norm(L, 'fro')));
+    % disp(num2str(norm(L_old - L, 'fro')/norm(L, 'fro')));
 
 end
 end

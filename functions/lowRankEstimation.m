@@ -4,7 +4,7 @@ function [X, P] = lowRankEstimation(X, D, L, R, B, Y, alpha, gamma, options)
 %   Using ADMM
 arguments
     X, D, L, R, B, Y, alpha, gamma double
-    options.tol = 1e-3
+    options.tol = 1e-4
     options.method = "GD"
     options.maxIter = 1000
     options.rho = 1
